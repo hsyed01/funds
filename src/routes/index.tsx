@@ -39,18 +39,20 @@ export default function Router() {
       path: '/',
       element: <DashboardLayout />,
       children: [
-        { path: '/', element: <Navigate to="/one" replace /> },
-        { path: 'one', element: <PageOne /> },
-        { path: 'two', element: <PageTwo /> },
-        { path: 'three', element: <PageThree /> }
+        { path: '/', element: <Navigate to="/fund/list" replace /> },
+        {
+          path: 'fund',
+          children: [
+            { path: '/list', element: <FundList /> },
+            { path: '/:id/show', element: <FundCreate /> },
+            { path: '/new', element: <FundCreate /> }
+          ]
+        }
       ]
     }
   ]);
 }
 
-// IMPORT COMPONENTS
-
 // Dashboard
-const PageOne = Loadable(lazy(() => import('../pages/PageOne')));
-const PageTwo = Loadable(lazy(() => import('../pages/PageTwo')));
-const PageThree = Loadable(lazy(() => import('../pages/PageThree')));
+const FundList = Loadable(lazy(() => import('../pages/FundList')));
+const FundCreate = Loadable(lazy(() => import('../pages/FundCreate')));

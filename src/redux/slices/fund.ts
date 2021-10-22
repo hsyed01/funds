@@ -1,3 +1,5 @@
+import { filter } from 'lodash';
+
 import { createSlice } from '@reduxjs/toolkit';
 import { dispatch } from '../store';
 // utils
@@ -39,21 +41,19 @@ const slice = createSlice({
     getFundsSuccess(state, action) {
       state.isLoading = false;
       state.funds = action.payload;
-    }
+    },
 
-    // // DELETE USERS
-    // deleteUser(state, action) {
-    //   const deleteUser = filter(state.userList, (user) => user.id !== action.payload);
-    //   state.userList = deleteUser;
-    // },
+    // DELETE FUNDS
+    deleteFundSuccess(state, action) {
+      state.isLoading = false;
+      const deleteFund = filter(state.funds, (fund) => fund.fund_id !== action.payload);
+      state.funds = deleteFund;
+    }
   }
 });
 
 // Reducer
 export default slice.reducer;
-
-// Actions
-// export const { deleteUser } = slice.actions;
 
 // ----------------------------------------------------------------------
 
@@ -63,6 +63,22 @@ export function getFunds() {
     try {
       const response = await axios.get('http://129.213.112.144:8080/captain/funds');
       dispatch(slice.actions.getFundsSuccess(response.data));
+    } catch (error) {
+      dispatch(slice.actions.hasError(error));
+    }
+  };
+}
+
+// ----------------------------------------------------------------------
+
+export function deleteFund(id: number) {
+  return async () => {
+    dispatch(slice.actions.startLoading());
+    try {
+      const response = await axios.delete(`http://129.213.112.144:8080/captain/funds/${id}`);
+      if (response.status === 200) {
+        dispatch(slice.actions.deleteFundSuccess(id));
+      }
     } catch (error) {
       dispatch(slice.actions.hasError(error));
     }

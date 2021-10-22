@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react';
-import { paramCase } from 'change-case';
 import { useRef, useState } from 'react';
 import editFill from '@iconify/icons-eva/edit-fill';
+import eyeFill from '@iconify/icons-eva/eye-fill';
 import { Link as RouterLink } from 'react-router-dom';
 import trash2Outline from '@iconify/icons-eva/trash-2-outline';
 import moreVerticalFill from '@iconify/icons-eva/more-vertical-fill';
@@ -14,10 +14,10 @@ import { PATH_DASHBOARD } from '../../../../routes/paths';
 
 type FundMoreMenuProps = {
   onDelete: VoidFunction;
-  fundName: string;
+  fundId: number;
 };
 
-export default function FundMoreMenu({ onDelete, fundName }: FundMoreMenuProps) {
+export default function FundMoreMenu({ onDelete, fundId }: FundMoreMenuProps) {
   const ref = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -37,22 +37,22 @@ export default function FundMoreMenu({ onDelete, fundName }: FundMoreMenuProps) 
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       >
+        <MenuItem
+          component={RouterLink}
+          to={`${PATH_DASHBOARD.fund.root}/${fundId}/show`}
+          sx={{ color: 'text.secondary' }}
+        >
+          <ListItemIcon>
+            <Icon icon={eyeFill} width={24} height={24} />
+          </ListItemIcon>
+          <ListItemText primary="Show" primaryTypographyProps={{ variant: 'body2' }} />
+        </MenuItem>
+
         <MenuItem onClick={onDelete} sx={{ color: 'text.secondary' }}>
           <ListItemIcon>
             <Icon icon={trash2Outline} width={24} height={24} />
           </ListItemIcon>
           <ListItemText primary="Delete" primaryTypographyProps={{ variant: 'body2' }} />
-        </MenuItem>
-
-        <MenuItem
-          component={RouterLink}
-          to={`${PATH_DASHBOARD.root}/${paramCase(fundName)}/`}
-          sx={{ color: 'text.secondary' }}
-        >
-          <ListItemIcon>
-            <Icon icon={editFill} width={24} height={24} />
-          </ListItemIcon>
-          <ListItemText primary="Edit" primaryTypographyProps={{ variant: 'body2' }} />
         </MenuItem>
       </Menu>
     </>

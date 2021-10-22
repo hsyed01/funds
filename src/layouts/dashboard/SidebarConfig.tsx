@@ -21,11 +21,7 @@ const sidebarConfig = [
   // ----------------------------------------------------------------------
   {
     subheader: 'general',
-    items: [
-      { title: 'One', path: PATH_DASHBOARD.general.pageOne, icon: ICONS.dashboard },
-      { title: 'Two', path: PATH_DASHBOARD.general.pageTwo, icon: ICONS.ecommerce },
-      { title: 'Three', path: PATH_DASHBOARD.general.pageThree, icon: ICONS.analytics }
-    ]
+    items: [{ title: 'Fund', path: PATH_DASHBOARD.root, icon: ICONS.dashboard }]
   }
 ];
 

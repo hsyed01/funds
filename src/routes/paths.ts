@@ -9,10 +9,11 @@ const ROOTS_DASHBOARD = '/';
 // ----------------------------------------------------------------------
 
 export const PATH_DASHBOARD = {
-  root: ROOTS_DASHBOARD,
-  general: {
-    pageOne: path(ROOTS_DASHBOARD, '/one'),
-    pageTwo: path(ROOTS_DASHBOARD, '/two'),
-    pageThree: path(ROOTS_DASHBOARD, '/three')
+  root: path(ROOTS_DASHBOARD, '/fund/list'),
+  fund: {
+    root: path(ROOTS_DASHBOARD, '/fund'),
+    list: path(ROOTS_DASHBOARD, '/fund/list'),
+    showById: path(ROOTS_DASHBOARD, '/fund/:id/show'),
+    newFund: path(ROOTS_DASHBOARD, '/fund/new')
   }
 };

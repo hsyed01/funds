@@ -1,10 +1,15 @@
 import { filter } from 'lodash';
 import { useState, useEffect } from 'react';
+import { Icon } from '@iconify/react';
+import plusFill from '@iconify/icons-eva/plus-fill';
+import { Link as RouterLink } from 'react-router-dom';
+
 // material
 import {
   Card,
   Table,
   Stack,
+  Button,
   Checkbox,
   TableRow,
   TableBody,
@@ -17,7 +22,8 @@ import {
 // redux
 import { RootState, useDispatch, useSelector } from '../redux/store';
 import { getFunds } from '../redux/slices/fund';
-
+// routes
+import { PATH_DASHBOARD } from '../routes/paths';
 // @types
 import { Fund, FundManager } from '../@types/fund';
 // components
@@ -25,6 +31,8 @@ import Page from '../components/Page';
 import Scrollbar from '../components/Scrollbar';
 import SearchNotFound from '../components/SearchNotFound';
 import { FundListHead, FundListToolbar, FundMoreMenu } from '../components/_dashboard/fund/list';
+import HeaderBreadcrumbs from '../components/HeaderBreadcrumbs';
+
 import { fDate } from '../utils/formatTime';
 
 // ----------------------------------------------------------------------
@@ -72,7 +80,7 @@ function applySortFilter(array: Fund[], comparator: (a: any, b: any) => number, 
   return stabilizedThis.map((el) => el[0]);
 }
 
-export default function PageOne() {
+export default function FundList() {
   const dispatch = useDispatch();
   const { funds } = useSelector((state: RootState) => state.fund);
   const [page, setPage] = useState(0);
@@ -141,6 +149,24 @@ export default function PageOne() {
   return (
     <Page title="Fund: List | Minimal-UI">
       <Container>
+        <HeaderBreadcrumbs
+          heading="Fund List"
+          links={[
+            { name: 'Dashboard', href: PATH_DASHBOARD.root },
+            { name: 'Fund', href: PATH_DASHBOARD.fund.list },
+            { name: 'List' }
+          ]}
+          action={
+            <Button
+              variant="contained"
+              component={RouterLink}
+              to={PATH_DASHBOARD.fund.newFund}
+              startIcon={<Icon icon={plusFill} />}
+            >
+              New Fund
+            </Button>
+          }
+        />
         <Card>
           <FundListToolbar
             numSelected={selected.length}
@@ -194,7 +220,7 @@ export default function PageOne() {
                           <TableCell align="right">
                             <FundMoreMenu
                               onDelete={() => handleDeleteFund(fund_id)}
-                              fundName={fund_name}
+                              fundId={fund_id}
                             />
                           </TableCell>
                         </TableRow>
