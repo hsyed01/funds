@@ -43,6 +43,19 @@ const slice = createSlice({
       state.funds = action.payload;
     },
 
+    // GET FUNDS
+    getFundManagersSuccess(state, action) {
+      state.isLoading = false;
+      state.fundManagers = action.payload;
+    },
+
+    // CREATE FUND
+    createFundSuccess(state, action) {
+      state.isLoading = false;
+      const newFund = action.payload;
+      state.funds = [...state.funds, newFund];
+    },
+
     // DELETE FUNDS
     deleteFundSuccess(state, action) {
       state.isLoading = false;
@@ -69,6 +82,36 @@ export function getFunds() {
   };
 }
 
+// ----------------------------------------------------------------------
+
+export function getFundManagers() {
+  return async () => {
+    dispatch(slice.actions.startLoading());
+    try {
+      const response = await axios.get('http://129.213.112.144:8080/captain/fund_managers');
+      dispatch(slice.actions.getFundManagersSuccess(response.data));
+    } catch (error) {
+      dispatch(slice.actions.hasError(error));
+    }
+  };
+}
+
+// ----------------------------------------------------------------------
+
+export function createFund(data: Fund) {
+  return async () => {
+    dispatch(slice.actions.startLoading());
+    try {
+      axios.defaults.headers['Access-Control-Allow-Origin'] = '*';
+      console.log(axios.defaults.headers);
+      const response = await axios.post('http://129.213.112.144:8080/captain/funds', data);
+      console.log(response, 'response for create');
+      dispatch(slice.actions.getFundManagersSuccess(response.data));
+    } catch (error) {
+      dispatch(slice.actions.hasError(error));
+    }
+  };
+}
 // ----------------------------------------------------------------------
 
 export function deleteFund(id: number) {

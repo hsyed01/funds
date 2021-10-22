@@ -216,10 +216,10 @@ export default function FundList() {
                               </Typography>
                             </Stack>
                           </TableCell>
-                          <TableCell align="left">{fDate(fund_inception_date)}</TableCell>
+                          <TableCell align="left">{fDate(fund_inception_date!)}</TableCell>
                           <TableCell align="right">
                             <FundMoreMenu
-                              onDelete={() => handleDeleteFund(fund_id)}
+                              onDelete={() => handleDeleteFund(fund_id!)}
                               fundId={fund_id}
                             />
                           </TableCell>

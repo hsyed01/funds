@@ -13,8 +13,8 @@ import { PATH_DASHBOARD } from '../../../../routes/paths';
 // ----------------------------------------------------------------------
 
 type FundMoreMenuProps = {
-  onDelete: VoidFunction;
-  fundId: number;
+  onDelete: () => void;
+  fundId?: number;
 };
 
 export default function FundMoreMenu({ onDelete, fundId }: FundMoreMenuProps) {
